@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JDCOEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #2b4260;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+        }
+        .login-box {
+            background-color: #344d6e;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            width: auto;
+            text-align: center;
+        }
+        .login-box h2 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .login-box button {
+            background-color: #ff9100;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .contact-info {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .contact-info a {
+            color: #40c4ff;
+            text-decoration: none;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            padding: 10px 0;
+            background-color: #1f2f47;
+        }
+        .social-icons {
+            margin-top: 15px;
+        }
+        .social-icons i {
+            margin: 0 8px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .social-icons i:hover {
+            color: #ff9100;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="login-box">
+        <img src="https://jdcoem.ac.in/wp-content/uploads/2024/02/logo-new-150x150-1.png" alt="JDCOEM Logo" class="logo">
+        <div class="subtitle">Education to Eternity</div>
+        <form>
+            <input type="text" placeholder="Username" id="email" required><br>
+            <input type="password" placeholder="Password" id="password" required><br>
+            <button type="button" onclick="Login()" >Login</button>
+        </form>
+        <div class="contact-info">
+            Khandala, Post: Valni, Near Hanuman Temple, Borgaon Phata, Kalmeshwar Road, Nagpur - 441501<br>
+            Mobile: 9011010038 | Fax: (0712) 2023003<br>
+            Email: <a href="mailto:info@jdcoem.ac.in">info@jdcoem.ac.in</a><br>
+            <strong style="color: orange;">For Admission Enquiry Call: 7774041329, 7888018373</strong><br>
+            Email: <a href="mailto:admission@jdcoem.ac.in">admission@jdcoem.ac.in</a>
+        </div>
+        <div class="social-icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-youtube"></i>
+            <i class="fab fa-linkedin-in"></i>
+            <i class="fab fa-twitter"></i>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright &copy; 2025. All rights reserved &copy; JD College of Engineering and Management
+    </div>
+</body>
+</html>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    function Login() {
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        if (email.trim() == "") {
+            alert('Please enter Email Address');
+        } else if (password.trim() == "") {
+            alert("Please enter your password");
+        } else {
+            $.ajax({
+                method: "POST",
+                url: "/student/login_handler/",
+                data: { 'email': email, 'password': password },
+                success: function (response) {
+                    if (response.status == 1) {
+                        window.location.href = '/student/student-index';
+                    } else {
+                        alert("Invalid Credentials");
+                    }
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>JD - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom styles for this template-->
+    <link href="{% static "css/sb-admin-2.min.css" %}" rel="stylesheet">
+
+    {% block style %} {% endblock %}
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #344d6e;" >
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+                <div class="sidebar-brand-icon">
+                    <img src="https://jdcoem.ac.in/wp-content/uploads/2024/02/logo-new-150x150-1.png" alt="JDCOEM Logo" style="height: 40px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">JD College</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item {% if request.get_full_path == "/" %}active{% endif %}">
+                <a class="nav-link" href="{% url "index" %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Student
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item {% if request.get_full_path == "/student/" or request.get_full_path == "/enroll/" or request.get_full_path == "/" %}{% endif %}">
+                <a class="nav-link collapsed" href="{% url 'student.index' %}" >
+                    <i class="fas fa-fw fa-user-graduate"></i>
+                    <span>Registrations</span>
+                </a>
+                <a class="nav-link collapsed" href="{% url 'enroll.index' %}" >
+                    <i class="fas fa-fw fa-user-graduate"></i>
+                    <span>Enrolls</span>
+                </a>
+            </li>
+
+            <li class="nav-item {% if request.get_full_path == "/course/" %}active{% endif %}">
+                <a class="nav-link" href="{% url 'course.index' %}">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Courses & Fees</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Payments
+            </div>
+
+            <li class="nav-item {% if request.get_full_path == "/payment/" %}active{% endif %}">
+                <a class="nav-link" href="{% url 'payment.index' %}">
+                    <i class="fas fa-fw fa-dollar-sign"></i>
+                    <span>Payments</span></a>
+            </li>
+
+            <li class="nav-item {% if request.get_full_path == "/payment/report/" %}active{% endif %}">
+                <a class="nav-link" href="{% url 'payment.report' %}">
+                    <i class="fas fa-fw fa-print"></i>
+                    <span>Reports</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            {% if user.is_staff %}
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Users
+                </div>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/auth/user/">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Users</span></a>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+
+            {% endif %}
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            {% block sidebar %} {% endblock %}
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+{#                    <form#}
+{#                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">#}
+{#                        <div class="input-group">#}
+{#                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."#}
+{#                                aria-label="Search" aria-describedby="basic-addon2">#}
+{#                            <div class="input-group-append">#}
+{#                                <button class="btn btn-primary" type="button">#}
+{#                                    <i class="fas fa-search fa-sm"></i>#}
+{#                                </button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <li class="nav-item  " >
+                            <a class="nav-link " href="{% url 'account.profile' %}">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item ">
+                            <a class="nav-link " href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-capitalize">{{ user.get_username }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="https://avatars.dicebear.com/api/initials/{{ user.username }}.svg?chars=1" alt="">
+                            </a>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+
+                        <li class="nav-item  " style=" display: flex ;align-items: anchor-center;" >
+                            <a class="btn btn-sm btn-danger" role="button" onclick="showLogoutModel()" >
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </li>
+
+                    
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    {% block heading %} {% endblock %}
+
+                    {% block content %} {% endblock %}
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; JD 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <form action="{% url 'account.logout' %}" class="d-inline-block" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <!-- <script src="{% static "vendor/jquery/jquery.min.js" %}"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static "js/sb-admin-2.min.js" %}"></script>
+
+    {% block script %} {% endblock %}
+
+    <script>
+
+        function showLogoutModel(){
+            $("#logoutModal").modal('show')
+        }
+
+    </script>
+
+</body>
+</html>
